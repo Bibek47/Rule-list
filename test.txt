@@ -1,6 +1,72 @@
-hello
-hhh
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE TaskDefinition PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<TaskDefinition executor="sailpoint.reporting.LiveReportExecutor" name="Service Accounts Report" progressMode="Percentage" resultAction="Rename" subType="Identity and User Reports" template="true" type="LiveReport">
+  <Attributes>
+    <Map>
+      <entry key="report">
+        <value>
+          <LiveReport title="Service Accounts Report">
+            <DataSource objectType="sailpoint.object.Link" type="Filter">
+              <QueryParameters>
+                <Parameter argument="applicationName">
+                  <QueryScript>
+                    <Source>
+                      import sailpoint.object.*;
+                      import java.lang.*;
 
+                      Filter filter = Filter.eq("application.name","Oracle Direct");
+                      queryOptions.addFilter(filter);
+                      return queryOptions;
+                    </Source>
+                  </QueryScript>
+                </Parameter>
+              </QueryParameters>
+            </DataSource>
+            <Columns>
+              <ReportColumnConfig field="accountName" header="Account Name" property="id" sortable="true" width="110">
+                <RenderScript>
+                  <Source>
 
-hjgb'
-gjj
+                    import sailpoint.object.Link;
+
+                    Link link = context.getObjectById(Link.class, value);
+                    if(link!=null){
+                    return link.getAttribute("USERNAME");
+                    }
+                  </Source>
+                </RenderScript>
+              </ReportColumnConfig>
+              <ReportColumnConfig field="USER_ID" header="USER_ID" property="id" sortable="true" width="110">
+                <RenderScript>
+                  <Source>
+
+                    import sailpoint.object.Link;
+
+                    Link link = context.getObjectById(Link.class, value);
+                    if(link!=null){
+                    return link.getAttribute("USER_ID");
+                    }
+                  </Source>
+                </RenderScript>
+              </ReportColumnConfig>
+              <ReportColumnConfig field="ACCOUNT_STATUS" header="ACCOUNT_STATUS" property="id" sortable="true" width="110">
+                <RenderScript>
+                  <Source>
+
+                    import sailpoint.object.Link;
+
+                    Link link = context.getObjectById(Link.class, value);
+                    if(link!=null){
+                    return link.getAttribute("ACCOUNT_STATUS");
+                    }
+                  </Source>
+                </RenderScript>
+              </ReportColumnConfig>
+            </Columns>
+          </LiveReport>
+        </value>
+      </entry>
+    </Map>
+  </Attributes>
+  <Description>A detailed view of the uncorrelated user accounts in the system.</Description>
+</TaskDefinition>
